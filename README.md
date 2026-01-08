@@ -85,7 +85,7 @@ homelab-platform/
 │   ├── roles/              # Reusable roles (common, docker-host, etc.)
 │   └── inventory/          # Host definitions
 ├── docs/
-│   ├── architecture.md     # System design and decisions
+│   ├── [infra.md](docs/infra.md)            # infrastructure design
 │   └── procedures/         # Runbooks and how-tos
 └── scripts/                # Utility scripts
 ```
