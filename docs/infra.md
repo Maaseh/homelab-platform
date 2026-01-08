@@ -1,4 +1,4 @@
-```
+```mermaid
 %%{init: {'theme':'base', 'themeVariables': {'fontSize':'16px'}}}%%
 graph TD
     subgraph Internet_Zone["☁️ Internet"]
