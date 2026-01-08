@@ -89,11 +89,6 @@ homelab-platform/
 │   └── procedures/         # Runbooks and how-tos
 └── scripts/                # Utility scripts
 ```
-
-**Related repositories:**
-- [homelab-monitoring](link): Observability stack (Step 2)
-- [homelab-services](link): Application deployments (Step 3)
-
 ## Contributing
 
 This is a personal learning project, but **tips, advice, and suggestions are always welcome!** 
