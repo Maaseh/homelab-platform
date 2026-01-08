@@ -1,6 +1,6 @@
 # Homelab Platform
 
-Personal infrastructure platform built for fun and learning. 
+A personal infrastructure platform built for fun and learning. 
 
 ## Philosophy
 
@@ -85,7 +85,7 @@ homelab-platform/
 │   ├── roles/              # Reusable roles (common, docker-host, etc.)
 │   └── inventory/          # Host definitions
 ├── docs/
-│   ├── [infra.md](docs/infra.md)            # infrastructure design
+│   ├── infra.md            # infrastructure design
 │   └── procedures/         # Runbooks and how-tos
 └── scripts/                # Utility scripts
 ```
