@@ -14,14 +14,19 @@ A personal infrastructure platform built for fun and learning.
 **Challenge 1.1: Manual VM provisioning is tedious**
 - Solution: Ansible playbooks for automated VM setup
 - Status: In Progress
+- Progression: 
+    - Ansible control node deployed (hl-orch-01). 
+    - Inventory done. 
+    - SSH key-based authentication established. 
 
 **Challenge 1.2: No consistent base configuration**
 - Solution: Ansible roles (common, docker-host, monitoring-agent)
 - Status: Planned
 
 **Challenge 1.3: Time drift across VMs**
-- Solution: Centralized NTP server
-- Status: Planned
+- Solution: Centralized NTP server (chrony)
+- Status: Done
+- Details: hl-orch-01 serving time to infrastructure (CH upstream pools)
 
 ### Step 2: Observability 
 *Goal: See what's happening in the infrastructure*
