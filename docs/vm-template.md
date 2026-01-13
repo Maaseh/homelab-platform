@@ -1,37 +1,42 @@
 # VM template information
 ##### V0.1
-> KISS version. more improvment and a cloud-init upgrade will come later.
+> KISS version. More improvement and a cloud-init upgrade will come later.
 
 ## Purpose:
 
-This document relate all useful information about VM Template created on Proxmox.
+This document relates all useful information about the VM Template created on Proxmox.
 The idea is to have a clear VM base to simply and easily create more virtual machines.
-As soon as  its created, Ansible will run to configure the VM based on the template and the purpose.
+As soon as  it's created, Ansible will run to configure the VM based on the template and the purpose.
 
 ## Configuration
 
 ### Hardware
 
-Rocky Linux 10.1:
-├── General
-│   ├── VM ID: 9000
-│   └── Name: rocky10-template
-├── OS
-│   └── ISO: Rocky-10.1-x86_64-minimal.iso
-├── System
-│   ├── Machine: q35
-│   ├── BIOS: SeaBIOS
-│   └── SCSI Controller: VirtIO SCSI
-├── Disks
-│   ├── Size: 32 GB
-│   └── Storage: local-lvm
-├── CPU
-│   ├── Type: host
-│   └── Cores: 2
-├── Memory
-│   └── 2048 MB
-└── Network
-    └── VirtIO
+**General:**
+- VM ID: `9000`
+- Name: `rocky10-template`
+
+**OS:**
+- ISO: `Rocky-10.1-x86_64-minimal.iso`
+
+**System:**
+- Machine: `q35`
+- BIOS: `SeaBIOS`
+- SCSI Controller: `VirtIO SCSI`
+
+**Disks:**
+- Size: `32 GB`
+- Storage: `local-lvm`
+
+**CPU:**
+- Type: `host` ⚠️ *Required to avoid kernel panic*
+- Cores: `2`
+
+**Memory:**
+- RAM: `2048 MB`
+
+**Network:**
+- Model: `VirtIO`
 
 > **Note:** CPU type `host` required to avoid kernel panic on Rocky/Alma Linux.
 > See: [Proxmox Forum Thread](https://forum.proxmox.com/threads/kernel-panic-centos-9.104656/)
