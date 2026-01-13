@@ -65,6 +65,7 @@ sudo systemctl enable --now qemu-guest-agent
 #### Cleaning
 
 ```
+#!/bin/bash
 # Remove SSH host keys
 sudo rm -f /etc/ssh/ssh_host_*
 
