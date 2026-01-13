@@ -40,6 +40,7 @@ As soon as  it's created, Ansible will run to configure the VM based on the temp
 
 
 > **Note:** CPU type `host` required to avoid kernel panic on Rocky/Alma Linux.
+> 
 > See: [Proxmox Forum Thread](https://forum.proxmox.com/threads/kernel-panic-centos-9.104656/)
 
 ### Software
