@@ -29,7 +29,7 @@ As soon as  it's created, Ansible will run to configure the VM based on the temp
 - Storage: `local-lvm`
 
 **CPU:**
-- Type: `host` ⚠️ *Required to avoid kernel panic*
+- Type: `host`
 - Cores: `2`
 
 **Memory:**
@@ -37,6 +37,7 @@ As soon as  it's created, Ansible will run to configure the VM based on the temp
 
 **Network:**
 - Model: `VirtIO`
+
 
 > **Note:** CPU type `host` required to avoid kernel panic on Rocky/Alma Linux.
 > See: [Proxmox Forum Thread](https://forum.proxmox.com/threads/kernel-panic-centos-9.104656/)
