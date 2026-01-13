@@ -96,6 +96,9 @@ Gateway: x.x.10.1
 DNS: 8.8.8.8;1.1.1.1
 ```
 
+**Staging IP Strategy:**  
+Cloned VMs start with a temporary staging IP (`x.x.10.250`) outside production ranges. Ansible then reconfigures each VM to its final IP address based on its role. This ensures no IP conflicts during the provisioning process.
+
 ### User
 Create a temporary user that can be use with Ansible for the first time. This will be deleted once another end-user will be created.
 
