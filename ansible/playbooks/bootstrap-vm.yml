@@ -1,0 +1,32 @@
+# Name: bootstrap-vm.yml
+# Author: Thomas "maaseh" Bonnet
+# Version: v0.1 KISS version
+
+# Description:
+# This bootstrap modifies key component: network and hostname.
+# Argument needed: target_ip, target_name
+# For now arguments are needed. In future version, we will implement an automatic the CIDR attribution.
+
+- name: Bootstrap new VM from template
+  hosts: staging
+
+  tasks:
+    - name: Configure network
+      community.general.nmcli:
+        conn_name: "ens18"
+        ip4: "{{ target_ip }}/24"
+        gw4: x.x.10.1
+        dns4: 
+          - 8.8.8.8
+          - 1.1.1.1
+        method4: manual
+        state: present
+
+    - name: Set hostname
+      ansible.builtin.hostname:
+        name: "{{ target_name }}"
+
+    - name: Reboot
+      ansible.builtin.reboot:
+        msg: "Rebooting after network configuration"
+        reboot_timeout: 300

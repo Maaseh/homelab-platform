@@ -1,0 +1,31 @@
+#Name: inventory.yml
+#Author: Thomas "Maaseh" Bonnet
+#
+#Description:
+#Simple inventory file divided by parents to simplify the process.
+#Modify the ip addresses, server names, and ansible_users. 
+
+orchestrator:
+  hosts:
+    hl-orch-01:
+      ansible_host: x.x.10.30
+
+pve:
+  hosts:
+    pve1:
+      ansible_host: x.x.10.10
+    pve2:
+      ansible_host: x.x.10.11
+
+k3s:
+  hosts:
+    k3s-master:
+      ansible_host: x.x.10.100
+    k3s-worker:
+      ansible_host: x.x.10.101
+
+staging:
+  hosts:
+    staging_vm:
+      ansible_host: x.x.10.250
+      ansible_user: your_user
