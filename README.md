@@ -13,7 +13,7 @@ A personal infrastructure platform built for fun and learning.
 
 **Challenge 1.1: Manual VM provisioning is tedious**
 - Solution: Ansible playbooks for automated VM setup
-- Status: In Progress
+- Status: done
 - Progression: 
     - Ansible control node deployed (hl-orch-01). 
     - Inventory done. 
