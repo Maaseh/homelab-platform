@@ -65,7 +65,7 @@
     community.general.nmcli:
       conn_name: ens18
       ip4: "{{ target_ip }}/24"
-      gw4: 172.16.10.1
+      gw4: x.x.10.1
       dns4:
         - 8.8.8.8
         - 1.1.1.1
