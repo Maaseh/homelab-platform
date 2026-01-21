@@ -1,0 +1,10 @@
+# Name: main.yml
+# Author: Thomas "maaseh" Bonnet
+# Description: Handler linked to ../common/main.yml
+
+# restart services
+
+- name: restart chrony
+  ansible.builtin.service:
+    name: chronyd
+    state: restarted
