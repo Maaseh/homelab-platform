@@ -1,0 +1,50 @@
+# Name: main.yml
+# Author: Thomas "Maaseh" Bonnet
+# Description: Basic configuration for new system
+# Note: Do not forget to modify "your-ntp.server" with your ntp server name/ip
+
+# time configuration
+
+  - name: timezone configuration
+    community.general.timezone:
+      name: Europe/Paris
+
+  - name: Install chrony
+    ansible.builtin.package:
+      name: chrony
+      state: present
+
+  - name: Configure Chrony with local NTP
+    ansible.builtin.lineinfile:
+      path: "{{ lookup('first_found', params) }}"
+      regexp: '^(pool|server) '
+      line: "server your-ntp.server iburst prefer"
+    vars:
+      params:
+        files:
+          - /etc/chrony/chrony.conf
+          - /etc/chrony.conf
+    notify: restart chrony
+
+# Packages update and installation
+
+  - name: update package cache (Debian)
+    ansible.builtin.apt:
+      update_cache: yes
+      cache_valid_time: 3600
+    when: ansible_os_family == "Debian"
+
+  - name: update package cache (RedHat)
+    ansible.builtin.dnf:
+      update_cache: yes
+    when: ansible_os_family == "RedHat"
+
+  - name: install packages
+    ansible.builtin.package:
+      name:
+        - vim
+        - htop
+        - curl
+        - wget
+        - net-tools
+      state: present

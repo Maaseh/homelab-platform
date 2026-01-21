@@ -2,31 +2,90 @@
 # Author: Thomas "maaseh" Bonnet
 # Version: v0.1 KISS version
 
-# Description:
-# This bootstrap modifies key component: network and hostname.
-# Argument needed: target_ip, target_name
-# example: ansible-playbook playbooks/bootstrap.yml -e "target_ip=x.x.x.x target_name=hl-test-01" --ask-pass
-# For now arguments are needed. In future version, we will implement an automatic the CIDR attribution.
+## Description:
+# This bootstrap modifies key component as network and hostname to give it the final name and IP address.
+# For now arguments are needed. In further version, we will automate the CIDR attribution.
+# Command example: ansible-playbook playbooks/bootstrap-vm.yml -e "target_ip=x.x.10.x target_name=hl-xxxx-xx"
 
-- name: Bootstrap new VM from template
+- name: Bootstrap new VM
   hosts: staging_vm
+  become: yes
   tasks:
-    - name: Configure network
-      community.general.nmcli:
-        conn_name: "ens18"
-        ip4: "{{ target_ip }}/24"
-        gw4: x.x.10.1
-        dns4: 
-          - 8.8.8.8
-          - 1.1.1.1
-        method4: manual
-        state: present
 
-    - name: Set hostname
-      ansible.builtin.hostname:
-        name: "{{ target_name }}"
+# User creation
 
-    - name: Reboot
-      ansible.builtin.reboot:
-        msg: "Rebooting after network configuration"
-        reboot_timeout: 300
+  - name: Ansible user creation
+    ansible.builtin.user:
+      name: ansible
+      comment: "Ansible automation user"
+      system: yes
+      shell: /bin/bash
+      uid: 900
+      create_home: yes
+
+  - name: Add sudo file for Ansible user
+    ansible.builtin.copy:
+      dest: "/etc/sudoers.d/ansible"
+      content: "ansible ALL=(ALL) NOPASSWD:ALL"
+      owner: root
+      group: root
+      mode: "0440"
+      validate: "/usr/sbin/visudo --check --file=%s"
+
+#SSH Configuration
+
+  - name: copy ssh bastion's pub-key to destination
+    ansible.posix.authorized_key:
+      user: maaseh
+      state: present
+      key: "{{ lookup('file', '../files/ssh_keys/homelab_admin.pub') }}"
+
+  - name: copy ssh Ansible's pub-key to destination
+    ansible.posix.authorized_key:
+      user: ansible
+      state: present
+      key: "{{ lookup('file', '../files/ssh_keys/ansible-key.pub') }}"
+
+  - name: disable password authentication with ssh
+    ansible.builtin.copy:
+      dest: "/etc/ssh/sshd_config.d/10-disable-password-auth.conf"
+      content: "PasswordAuthentication no"
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: reload SSH service
+    ansible.builtin.systemd:
+      name: sshd
+      state: reloaded
+
+# Network & hostname configuration
+
+  - name: Configure network
+    community.general.nmcli:
+      conn_name: ens18
+      ip4: "{{ target_ip }}/24"
+      gw4: 172.16.10.1
+      dns4:
+        - 8.8.8.8
+        - 1.1.1.1
+      method4: manual
+      state: present
+
+  - name: Set hostname
+    ansible.builtin.hostname:
+      name: "{{ target_name }}"
+
+# Reboot with new configuration
+
+  - name: Reboot and apply new network config
+    ansible.builtin.reboot:
+      msg: "Rebooting after network configuration"
+      reboot_timeout: 120
+    ignore_unreachable: yes
+    ignore_errors: yes    
+
+  - name: Bootstrap completed - VM now on new IP
+    ansible.builtin.debug:
+      msg: "Bootstrap finished. VM is now at {{ target_ip }} with hostname {{ target_name }}"
+    delegate_to: localhost
