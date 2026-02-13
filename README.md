@@ -86,6 +86,7 @@ Ideas collected during tech watch sessions. No priority, no commitment — just 
 **Security**
 - CrowdSec — Community-driven Fail2ban alternative with shared threat intelligence. Integrates natively with Traefik as a bouncer. Relevant once services are exposed externally.
 - Wazuh — Security monitoring and SIEM (already in initial roadmap)
+- Caddy — Reverse proxy with automatic HTTPS (built-in ACME/DNS-01). Simpler config than Traefik, native CrowdSec integration. Evaluate as potential Certbot + reverse proxy replacement at Step 3.
 
 **Communication & Collaboration**
 - Matrix (Synapse/Dendrite) + Element — Self-hosted, federated, E2E encrypted messaging. Potential Discord/WhatsApp replacement for family use. Protocol = Matrix, client = Element, server = Synapse/Dendrite.
