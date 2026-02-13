@@ -80,7 +80,31 @@ A personal infrastructure platform built for fun and learning.
 
 **TBD** - Will evolve based on learning interests (K8s, service mesh, advanced networking)
 
-## Project Structure
+### Future Projects ideas (TBD)
+Ideas collected during tech watch sessions. No priority, no commitment — just inspiration for when the foundation is solid.
+
+**Security**
+- CrowdSec — Community-driven Fail2ban alternative with shared threat intelligence. Integrates natively with Traefik as a bouncer. Relevant once services are exposed externally.
+- Wazuh — Security monitoring and SIEM (already in initial roadmap)
+
+**Communication & Collaboration**
+- Matrix (Synapse/Dendrite) + Element — Self-hosted, federated, E2E encrypted messaging. Potential Discord/WhatsApp replacement for family use. Protocol = Matrix, client = Element, server = Synapse/Dendrite.
+
+**Tech Watch & Information**
+- FreshRSS / Miniflux — Self-hosted RSS aggregator. Use cases: automated CVE feeds filtered by stack (Rocky, Proxmox, GitLab, Docker), tech news, homelab discoveries.
+- RSS → Notification pipeline — CVE feed → filter by deployed tech → push notification (mail, Matrix, etc.)
+
+**Media & Storage**
+- Jellyfin — Self-hosted open-source media server (Netflix-like). Runs in Docker, points to network storage.
+- Centralized NAS — Confirmed need for media storage (capacity, reliability, throughput). Two paths to evaluate:
+  1. Commercial NAS / Synology (KISS, plug & play)
+  2. TrueNAS DIY (learning opportunity, more control, lower cost)
+
+**External Access**
+- WireGuard VPN — Secure remote access without exposing services
+- Cloudflare Proxy / DDoS Protection — For when services go public
+
+---
 
 This repository contains the foundation layer automation:
 ```
@@ -94,6 +118,7 @@ homelab-platform/
 │   └── procedures/         # Runbooks and how-tos
 └── scripts/                # Utility scripts
 ```
+
 ## Contributing
 
 This is a personal learning project, but **tips, advice, and suggestions are always welcome!** 
