@@ -71,7 +71,7 @@ zone "10.16.172.in-addr.arpa" IN {
 };
 ```
 
-### `/var/named/your.dns.domain.lab`
+### `/var/named/your.dns.domain.lab.db`
 ```dns
 $TTL 86400
 @ IN SOA hl-dns-01.your.dns.domain.lab. admin.your.dns.domain.lab. (
