@@ -28,10 +28,15 @@ A personal infrastructure platform built for fun and learning.
 - Status: Done
 - Details: hl-orch-01 serving time to infrastructure (CH upstream pools)
 
-**Challenge 1.4: VPN access to the bastion**
-- Solution: Install and configure Netbird
+**Challenge 1.4: No name resolution service configured**
+- Solution: Bind9 as DNS resolver
+- Status: Done
+- Details: hl-dns-01 as DNS server. Authoritative zone named lab.vansys.io
+  
+**Challenge 1.5: Unable to connect to servers outside my home**
+- Solution: Netbird as a VPN server with a zero-trust approach
 - Status: Planned
-- Details: None
+- Details: HTTPS Management through CloudFlare, no inbound TCP ports exposed, ACL to enforce granularity, and only one entry point to the Bastion with port 22
 
 ### Step 2: Observability 
 *Goal: See what's happening in the infrastructure*
@@ -52,8 +57,8 @@ A personal infrastructure platform built for fun and learning.
 ### Step 3: Service Platform 
 *Goal: Deploy useful services easily*
 
-**Challenge 3.1: Hard to remember IPs and ports**
-- Solution: Pi-hole DNS + Traefik reverse proxy
+**Challenge 3.1: Unable to reach local websites outside**
+- Solution: Traefik reverse proxy
 - Status: Planned
 
 **Challenge 3.2: Manual SSL certificate management**
