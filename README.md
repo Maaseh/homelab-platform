@@ -57,8 +57,8 @@ A personal infrastructure platform built for fun and learning.
 ### Step 3: Service Platform 
 *Goal: Deploy useful services easily*
 
-**Challenge 3.1: Unable to reach local websites outside**
-- Solution: Traefik reverse proxy
+**Challenge 3.1: No access to web services from bastion**
+- Solution: Caddy as a reverse proxy
 - Status: Planned
 
 **Challenge 3.2: Manual SSL certificate management**
