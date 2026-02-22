@@ -28,6 +28,11 @@ A personal infrastructure platform built for fun and learning.
 - Status: Done
 - Details: hl-orch-01 serving time to infrastructure (CH upstream pools)
 
+**Challenge 1.4: VPN access to the bastion**
+- Solution: Install and configure Netbird
+- Status: Planned
+- Details: None
+
 ### Step 2: Observability 
 *Goal: See what's happening in the infrastructure*
 
