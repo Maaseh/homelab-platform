@@ -77,20 +77,20 @@ During Challenge 1.5, I decided to implement an open source, zero-Trust network 
         ```
     - creating the caddy service inside docker-compose
     ```
-  # Caddy
-  caddy:
-    image: caddy:latest
-    restart: unless-stopped
-    networks: [netbird]
+      # Caddy
+      caddy:
+        image: caddy:latest
+        restart: unless-stopped
+        networks: [netbird]
+        volumes:
+          - ./conf:/etc/caddy
+          - caddy_data:/data
+          - caddy_config:/config
+    
     volumes:
-      - ./conf:/etc/caddy
-      - caddy_data:/data
-      - caddy_config:/config
-
-volumes:
-  netbird_data:
-  caddy_data:
-  caddy_config:
+      netbird_data:
+      caddy_data:
+      caddy_config:
     ```
     - testing the configuration to ensure the container runs well
 ### Application configuration
@@ -99,7 +99,7 @@ volumes:
   - Admin account creation == **OK**
   - Endpoint configuration == **NOK**
   ```
-  netbird-server  | 2026-02-24T21:54:39.282Z ERRO [context: HTTP, requestID: {ID}] management/server/store/sql_store.go:1106: error when getting account {account} from the store: record not found
+    netbird-server  | 2026-02-24T21:54:39.282Z ERRO [context: HTTP, requestID: {ID}] management/server/store/sql_store.go:1106: error when getting account {account} from the store: record not found
   ```
 
 ## Investigation
@@ -140,17 +140,17 @@ As I am unable to connect any endpoint to Netbird:
       - ```docker inspect netbird-caddy-1 | grep IPAddress``` . This command helped me to find the IP address of Caddy
       - To avoid the caddy IP Address to change, I modified the docker-compose file
         ```
-        #Caddy config:
-          networks:
-            netbird:
-              ipv4_address: 172.18.0.10
-
-        # Network config:
-          networks:
-            netbird:
-              ipam:
-                config:
-                  - subnet: 172.18.0.0/24
+            #Caddy config:
+              networks:
+                netbird:
+                  ipv4_address: 172.18.0.10
+    
+            # Network config:
+              networks:
+                netbird:
+                  ipam:
+                    config:
+                      - subnet: 172.18.0.0/24
         ```
         - Note: Even if this configuration was initially incorrect, this was not the root cause of the initial issue.
 
