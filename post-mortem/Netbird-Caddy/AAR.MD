@@ -76,22 +76,22 @@ During Challenge 1.5, I decided to implement an open source, zero-Trust network 
         }
         ```
     - creating the caddy service inside docker-compose
-    ```
-      # Caddy
-      caddy:
-        image: caddy:latest
-        restart: unless-stopped
-        networks: [netbird]
+        ```
+          # Caddy
+          caddy:
+            image: caddy:latest
+            restart: unless-stopped
+            networks: [netbird]
+            volumes:
+              - ./conf:/etc/caddy
+              - caddy_data:/data
+              - caddy_config:/config
+        
         volumes:
-          - ./conf:/etc/caddy
-          - caddy_data:/data
-          - caddy_config:/config
-    
-    volumes:
-      netbird_data:
-      caddy_data:
-      caddy_config:
-    ```
+          netbird_data:
+          caddy_data:
+          caddy_config:
+        ```
     - testing the configuration to ensure the container runs well
 ### Application configuration
 - **connection to netbird.vansys.io**
