@@ -1,4 +1,4 @@
-# After Action Review on the implementation of Caddy for Netbird service
+# After Action Review on the implementation of NEtbird
 Author: Thomas "Maaseh" Bonnet
 ---
 
