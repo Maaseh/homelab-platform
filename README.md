@@ -65,10 +65,10 @@ A personal infrastructure platform built for fun and learning.
 
 **Challenge 3.1: No access to web services from bastion**
 - Solution: Caddy as a reverse proxy
-- Status: Planned
+- Status: Done with 1.5
 
 **Challenge 3.2: Manual SSL certificate management**
-- Solution: Traefik with Let's Encrypt automation
+- Solution: Let's Encrypt automation
 - Status: Planned
 
 **Challenge 3.3: Family needs cloud storage**
