@@ -42,18 +42,18 @@ During Challenge 1.5, I decided to implement an open source, zero-Trust network 
   - creation .env to store the secret key and chmod 600 the file
   - Configuring cloudflared inside docker-compose
     ```
-  # Cloudflared
-  cloudflare-tunnel:
-    image: cloudflare/cloudflared:latest
-    container_name: cloudflare_tunnel
-    command:  tunnel --no-autoupdate run --token ${TOKEN_CLOUDFLARE}
-    restart: unless-stopped
-    networks: [netbird]
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "500m"
-        max-file: "2"
+      # Cloudflared
+      cloudflare-tunnel:
+        image: cloudflare/cloudflared:latest
+        container_name: cloudflare_tunnel
+        command:  tunnel --no-autoupdate run --token ${TOKEN_CLOUDFLARE}
+        restart: unless-stopped
+        networks: [netbird]
+        logging:
+          driver: "json-file"
+          options:
+            max-size: "500m"
+            max-file: "2"
     ```
   - Use docker compose up -d, checking if the container runs without issue and checking the tunnel health on CloudFlare website
 - **Caddy installation and configuration**
