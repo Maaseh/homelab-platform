@@ -38,11 +38,11 @@ A personal infrastructure platform built for fun and learning.
 - Status: Done
 - Details: Using Caddy as a reverse proxy with TLS, ACL to enforce granularity, and only one entry point to the Bastion with port 22
 - Progression:
-      - Docker installed
-      - Netbird installed and configured
-      - Caddy installed and configured
-      - UDM port forwarding == OK
-      - Cloudflare DNS record configured (Grey cloud)
+    - Docker installed
+    - Netbird installed and configured
+    - Caddy installed and configured
+    - UDM port forwarding == OK
+    - Cloudflare DNS record configured (Grey cloud)
 
 ### Step 2: Observability 
 *Goal: See what's happening in the infrastructure*
