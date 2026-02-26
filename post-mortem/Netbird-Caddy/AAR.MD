@@ -63,17 +63,17 @@ During Challenge 1.5, I decided to implement an open source, zero-Trust network 
     - modifying the caddyfile-netbird.txt to meet the requirements and copy it to the Caddyfile
         ```
         :80 {
-    # Native gRPC (needs HTTP/2 cleartext to backend)
-    @grpc header Content-Type application/grpc*
-    reverse_proxy @grpc h2c://netbird-server:80
-
-    # Combined server paths (relay, signal, management, OAuth2)
-    @backend path /relay* /ws-proxy/* /api/* /oauth2/*
-    reverse_proxy @backend netbird-server:80
-
-    # Dashboard (everything else)
-    reverse_proxy /* dashboard:80
-}
+            # Native gRPC (needs HTTP/2 cleartext to backend)
+            @grpc header Content-Type application/grpc*
+            reverse_proxy @grpc h2c://netbird-server:80
+        
+            # Combined server paths (relay, signal, management, OAuth2)
+            @backend path /relay* /ws-proxy/* /api/* /oauth2/*
+            reverse_proxy @backend netbird-server:80
+        
+            # Dashboard (everything else)
+            reverse_proxy /* dashboard:80
+        }
         ```
     - creating the caddy service inside docker-compose
     ```
