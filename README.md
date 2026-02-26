@@ -36,7 +36,13 @@ A personal infrastructure platform built for fun and learning.
 **Challenge 1.5: Unable to connect to servers outside my home**
 - Solution: Netbird as a VPN server with a zero-trust approach
 - Status: Done
-- Details: Using Caddy as Reverse Proxy with TLS, ACL to enforce granularity, and only one entry point to the Bastion with port 22
+- Details: Using Caddy as a reverse proxy with TLS, ACL to enforce granularity, and only one entry point to the Bastion with port 22
+- Progression:
+      - Docker installed
+      - Netbird installed and configured
+      - Caddy installed and configured
+      - UDM port forwarding == OK
+      - Cloudflare DNS record configured (Grey cloud)
 
 ### Step 2: Observability 
 *Goal: See what's happening in the infrastructure*
