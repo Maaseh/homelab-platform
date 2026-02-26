@@ -152,9 +152,95 @@ As I am unable to connect any endpoint to Netbird:
                     config:
                       - subnet: 172.18.0.0/24
         ```
-        - Note: Even if this configuration was initially incorrect, this was not the root cause of the initial issue.
+        - Note: Even if this configuration was initially incorrect, this was not the root cause of the initial issue.\
+
+- **Second question: Is Caddy able to handle gRPC traffic?**
+  - Caddy logs showed: `HTTP/2 skipped because it requires TLS`
+  - gRPC requires HTTP/2. Since Caddy listens on `:80` (no TLS, as TLS is terminated by Cloudflare), HTTP/2 was disabled by default
+  - Fix: Added global options to enable h2c (HTTP/2 cleartext)
+```
+    {
+        servers {
+            protocols h1 h2c
+        }
+    }
+```
+  - Result: Warning disappeared, but endpoint connection still failing
+
+- **Third question: Is the embedded IdP functional?**
+  - Tested OIDC endpoint from the VM:
+```
+    curl -s https://netbird.vansys.io/oauth2/.well-known/openid-configuration
+```
+  - Result: valid JSON response with correct issuer, endpoints, and supported scopes == **OK**
+  - The embedded IdP serves correctly through the full chain (Cloudflare → tunnel → cloudflared → Caddy → netbird-server)
+
+- **Fourth question: Can clients authenticate via gRPC?**
+  - Client error persisted after all fixes:
+```
+    retrying Login to the Management service due to error rpc error: code = Unknown desc = getting device authorization flow info failed with error: failed while getting Management Service public key
+```
+  - After wiping volumes (`docker compose down -v`) and recreating the stack, new error appeared:
+```
+    unable to find appropriate key
+    token could not be parsed: token is unverifiable
+```
+  - Dashboard login also returned: `token invalid` (HTTP 401)
+
+- **Fifth question: Is this a known issue?**
+  - Research on NetBird GitHub issues revealed multiple reports of the same error when using Cloudflare Tunnel
+  - Root cause: **Cloudflare Tunnel does not correctly forward gRPC trailers**, which are required by the NetBird management service for authentication key exchange
+  - This is a Cloudflare limitation, not a configuration issue
+  - Confirmed by community: even with direct routing of `/management.ManagementService/` through the tunnel, trailers are stripped
+
+- **Sixth question: Same issue with Traefik?**
+  - Reconfigured the stack using Traefik (natively supported by NetBird) instead of Caddy
+  - Traefik failed to obtain TLS certificate:
+```
+    unable to generate a certificate for the domains [netbird.vansys.io]: error: 403 :: Cannot negotiate ALPN protocol "acme-tls/1" for tls-alpn-01 challenge
+```
+  - Cause: Cloudflare Tunnel intercepts TLS, preventing Let's Encrypt TLS-ALPN-01 challenge from reaching Traefik
+  - This confirmed that Cloudflare Tunnel is incompatible with the default NetBird self-hosted setup regardless of the reverse proxy used
 
 ## Decision
 
+Based on the investigation, Cloudflare Tunnel is incompatible with NetBird self-hosted due to:
+1. gRPC trailers being stripped by Cloudflare, breaking management service authentication
+2. TLS-ALPN-01 challenge being blocked, preventing automatic certificate provisioning
+
+**Decision: Remove Cloudflare Tunnel from the NetBird architecture.**
+
+New architecture:
+- `netbird.vansys.io` → A record (grey cloud, proxy OFF) → UDM port forward 443/TCP → Caddy (automatic TLS via Let's Encrypt) → NetBird services
+- `turn.vansys.io` → A record (grey cloud, proxy OFF) → UDM port forward UDP 3478, 5349, 49152-49162 → coturn
+- Cloudflare remains as DNS registrar only for NetBird-related subdomains
+- Caddy chosen over Traefik for simplicity (KISS principle), as the NetBird Reverse Proxy feature (requiring Traefik) is still in beta
+
+Trade-off accepted: opening port 443/TCP on the UDM increases the attack surface compared to the tunnel approach, but this is acceptable for a homelab context with a single self-hosted VPN service.
 
 ## Conclusion
+
+### What worked
+- VM provisioning and Ansible automation
+- Cloudflare Tunnel setup and connectivity (dashboard was reachable)
+- Docker Compose stack unification (all services on the same bridge network)
+- Caddy path-based routing configuration for multi-service architecture
+- OIDC endpoint functional through the full chain
+
+### What didn't work
+- Cloudflare Tunnel + NetBird gRPC authentication (fundamental incompatibility)
+- Cloudflare Tunnel + Let's Encrypt TLS-ALPN-01 challenge (TLS interception)
+
+### Lessons learned
+1. **Always verify tool compatibility before designing the architecture.** Cloudflare Tunnel was chosen for its security benefits, but its limitations with gRPC were not identified upfront
+2. **Follow the vendor's recommended setup first, then customize.** NetBird's default configuration works without Cloudflare Tunnel — adding it introduced unnecessary complexity
+3. **Separate concerns when debugging.** Testing each layer independently (DNS, tunnel, reverse proxy, authentication) was essential to isolate the root cause
+4. **Document failures.** This AAR exists because the failure taught more than a successful deployment would have
+
+### Next steps
+- Reconfigure NetBird with Caddy (no Cloudflare Tunnel)
+- Open port 443/TCP on UDM with forwarding to hl-vpn-01
+- Validate automatic TLS provisioning via Let's Encrypt
+- Test endpoint connectivity from external network
+- Update CLAUDE.md to reflect the new architecture
+- Update README Challenge 1.5 details
