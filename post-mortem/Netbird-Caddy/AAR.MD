@@ -238,9 +238,10 @@ Trade-off accepted: opening port 443/TCP on the UDM increases the attack surface
 4. **Document failures.** This AAR exists because the failure taught more than a successful deployment would have
 
 ### Next steps
-- Reconfigure NetBird with Caddy (no Cloudflare Tunnel)
-- Open port 443/TCP on UDM with forwarding to hl-vpn-01
-- Validate automatic TLS provisioning via Let's Encrypt
-- Test endpoint connectivity from external network
-- Update CLAUDE.md to reflect the new architecture
-- Update README Challenge 1.5 details
+- [x] Reconfigure NetBird with Caddy (no Cloudflare Tunnel)
+- [x] Reconfigure Cloudflare to forward netbird.vansys.io
+- [x] Configure port forwarding on UDM
+- [x] Open port 443/TCP on UDM with forwarding to hl-vpn-01
+- [x] Validate automatic TLS provisioning via Let's Encrypt
+- [x] Test endpoint connectivity from external network
+- [x] Update README Challenge 1.5 details
