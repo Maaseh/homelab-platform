@@ -14,7 +14,6 @@ During Challenge 1.5, I decided to implement an open source, zero-Trust network 
     - CPU: 2 cores
     - RAM: 4 Go
     - Network: 172.16.10.3 
-    - 
 - **Automation with Ansible:**
     - bootstrap playbook == **OK**
     - Rocky-linux playbook == **OK**
