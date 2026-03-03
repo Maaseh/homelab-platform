@@ -21,7 +21,7 @@ A personal infrastructure platform built for fun and learning.
 
 **Challenge 1.2: No consistent base configuration**
 - Solution: Ansible roles (common, docker-host, monitoring-agent)
-- Status: Planned
+- Status: Done
 
 **Challenge 1.3: Time drift across VMs**
 - Solution: Centralized NTP server (chrony)
