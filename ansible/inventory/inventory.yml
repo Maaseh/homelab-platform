@@ -5,31 +5,31 @@
 #Simple inventory file divided by parents to simplify the process.
 #Modify the ip addresses, server names, and ansible_users. 
 
-orchestrator:
+servers:
   hosts:
     hl-orch-01:
-      ansible_host: x.x.10.30
-
-pve:
-  hosts:
+      ansible_host: 172.16.10.30
     pve1:
-      ansible_host: x.x.10.10
+      ansible_host: 172.16.10.10
     pve2:
-      ansible_host: x.x.10.11
-
-k3s:
-  hosts:
-    k3s-master:
-      ansible_host: x.x.10.100
-    k3s-worker:
-      ansible_host: x.x.10.101
+      ansible_host: 172.16.10.11
+    hl-vpn-01:
+      ansible_host: 172.16.10.3
+    hl-dns-01:
+      ansible_host: 172.16.10.2
+    hl-mon-01:
+      ansible_host: 172.16.10.5
 
 staging:
   hosts:
     staging_vm:
-      ansible_host: x.x.10.250
-      ansible_user: your_user
-    staging_vm__af:
-      ansible_host: x.x.10.x
-      ansible_user: your_user
-      ansible_ssh_private_key_file: ~/.ssh/ansible-key
+      ansible_host: 172.16.10.200
+      ansible_user: ${local_user}
+      ansible_password: ${local_pass}
+    staging_vm_ar:
+      ansible_host: 172.16.10.x
+
+vms:
+  hosts:
+    hl-wtotest-01:
+      ansible_host: 172.16.10.x
