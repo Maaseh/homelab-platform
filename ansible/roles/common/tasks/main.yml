@@ -17,7 +17,7 @@
   ansible.builtin.lineinfile:
     path: "{{ lookup('first_found', params) }}"
     regexp: '^(pool|server) '
-    line: "server x.x.10.30 iburst prefer"
+    line: "server 172.16.10.30 iburst prefer"
   vars:
     params:
       files:
