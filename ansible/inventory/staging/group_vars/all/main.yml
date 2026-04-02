@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Variables applied to all staging hosts.
 # Vault variables are shared with production vault.yml.
