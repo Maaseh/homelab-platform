@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Installs and configures Prometheus and node_exporter on
 # hosts in the infra_monitoring group.
