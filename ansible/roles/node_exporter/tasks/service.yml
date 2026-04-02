@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Enables and starts the node_exporter systemd service.
 # daemon_reload is handled by the handler in handlers/main.yml
