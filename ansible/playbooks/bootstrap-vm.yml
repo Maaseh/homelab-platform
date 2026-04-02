@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Provisions a new VM cloned from a Proxmox template.
 # Play 1 connects to the default template IP, sets the hostname,
