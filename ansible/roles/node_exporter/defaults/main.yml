@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Default variables for the node_exporter role.
 # Any of these values can be overridden in group_vars or host_vars
