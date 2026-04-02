@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Host-specific variables for hl-mon-01.
 # ==============================================================
@@ -8,5 +10,5 @@
 ---
 
 # Grafana admin credentials (values stored in vault.yml)
-grafana_admin_user:     admin
-grafana_admin_password: "{{ vault_grafana_admin_pass }}"
+# grafana_admin_user:     admin
+# grafana_admin_password: "{{ vault_grafana_admin_pass }}"
