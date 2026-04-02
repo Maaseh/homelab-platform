@@ -1,0 +1,36 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Updates the package cache and installs base packages.
+#
+# pkg_manager is set in group_vars/os_rhel and group_vars/os_debian.
+# base_packages is set in group_vars/os_rhel and group_vars/os_debian.
+#
+# The cache update tasks use OS-specific modules because the
+# generic ansible.builtin.package module does not support
+# update_cache. The when condition uses pkg_manager from
+# group_vars — not ansible_facts — to stay consistent with
+# the variable-driven architecture.
+# ==============================================================
+
+---
+
+- name: Update package cache (apt)
+  ansible.builtin.apt:
+    update_cache:      true
+    cache_valid_time:  3600
+  when: pkg_manager == 'apt'
+
+- name: Update package cache (dnf)
+  ansible.builtin.dnf:
+    update_cache: true
+  when: pkg_manager == 'dnf'
+
+- name: Install base packages
+  ansible.builtin.package:
+    name:  "{{ base_packages }}"
+    state: present
+

@@ -1,0 +1,28 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Entry point for the node_exporter role.
+# Calls each sub-task file in order.
+# Sub-tasks are split by concern so they are easy to read,
+# debug, and modify independently.
+# ==============================================================
+
+---
+
+- name: Install node_exporter binary and service unit
+  ansible.builtin.import_tasks: install.yml
+
+- name: Configure firewall
+  ansible.builtin.import_tasks: firewall.yml
+  when: firewall_managed | default(true)
+
+- name: Apply SELinux context
+  ansible.builtin.import_tasks: selinux.yml
+  when: selinux_state | default('disabled') != 'disabled'
+
+- name: Enable and start service
+  ansible.builtin.import_tasks: service.yml
+
+- name: Register target in Prometheus file_sd
+  ansible.builtin.import_tasks: file_sd.yml

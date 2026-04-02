@@ -1,0 +1,15 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to hosts in the infra_networking group.
+# Covers DNS configuration.
+# ==============================================================
+
+---
+
+# DNS
+dns_zone_internal: lab.vansys.io
+dns_listen_address: 172.16.10.2
+
+machine_role: networking

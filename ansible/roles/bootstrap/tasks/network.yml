@@ -1,0 +1,31 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Reconfigures the network interface from the template IP
+# to the target IP using nmcli.
+#
+# This is the last task of Play 1. Ansible will lose the
+# connection immediately after the IP change — this is expected.
+# Play 2 in bootstrap-vm.yml reconnects on the new IP via add_host.
+# No reboot needed — nmcli applies the change immediately.
+# ==============================================================
+
+---
+
+- name: Set static IP via nmcli
+  community.general.nmcli:
+    conn_name:   "{{ bootstrap_interface }}"
+    type:        ethernet
+    ip4:         "{{ target_ip }}/{{ bootstrap_prefix }}"
+    gw4:         "{{ bootstrap_gateway }}"
+    dns4:        "{{ bootstrap_dns }}"
+    method4:     manual
+    state:       present
+    autoconnect: true
+  notify: Reload network connection
+
+- name: Flush handlers to apply network change immediately
+  ansible.builtin.meta: flush_handlers

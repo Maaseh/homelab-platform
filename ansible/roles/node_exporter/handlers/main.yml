@@ -1,0 +1,26 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Handlers for the node_exporter role.
+#
+# Handlers are tasks that only run when explicitly triggered
+# via notify. They run once at the end of the play, regardless
+# of how many tasks triggered them.
+#
+# Reload systemd  : triggered when the service unit file changes.
+# Reload Prometheus: triggered when a file_sd target file changes.
+# ==============================================================
+
+---
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Reload Prometheus
+  ansible.builtin.uri:
+    url:    "{{ prometheus_reload_url }}"
+    method: POST
+  delegate_to: hl-mon-01
+

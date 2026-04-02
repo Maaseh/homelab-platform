@@ -1,0 +1,21 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to all Proxmox LXC containers.
+# LXC containers share the host kernel, which disables several
+# features that are available on full VMs.
+# ==============================================================
+
+---
+
+# LXC containers do not run a full init system.
+# Disable features that require kernel-level access.
+firewall_managed: false
+disk_managed:     false
+
+# Python interpreter must be set explicitly as auto-detection
+# may fail in unprivileged containers.
+ansible_python_interpreter: /usr/bin/python3
+
+machine_type: lxc

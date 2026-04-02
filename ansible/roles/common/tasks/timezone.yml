@@ -1,0 +1,17 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Sets the system timezone.
+# Value comes from defaults/main.yml (Europe/Paris).
+# Override in group_vars or host_vars if needed.
+# ==============================================================
+
+---
+
+- name: Set system timezone
+  community.general.timezone:
+    name: "{{ system_timezone }}"
+

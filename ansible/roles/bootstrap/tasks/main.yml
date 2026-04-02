@@ -1,0 +1,36 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Entry point for the bootstrap role.
+# Validates required variables then calls sub-task files in order.
+#
+# Order matters:
+#   1. user    — ansible user must exist before SSH keys are deployed
+#   2. ssh     — SSH hardened before network changes cut the connection
+#   3. hostname — no dependency, but logical to set before network
+#   4. network — last, as it drops the current connection
+# ==============================================================
+
+---
+
+- name: Validate required variables
+  ansible.builtin.assert:
+    that:
+      - target_ip is defined
+      - target_name is defined
+    fail_msg: "target_ip and target_name must be passed via -e."
+
+- name: Create ansible user and sudo access
+  ansible.builtin.import_tasks: user.yml
+
+- name: Configure SSH
+  ansible.builtin.import_tasks: ssh.yml
+
+- name: Set hostname
+  ansible.builtin.import_tasks: hostname.yml
+
+- name: Reconfigure network
+  ansible.builtin.import_tasks: network.yml

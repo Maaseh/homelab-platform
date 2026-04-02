@@ -1,0 +1,11 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to hosts in the infra_orchestration group.
+# Covers Ansible controller configuration.
+# NTP server configuration is handled in host_vars/hl-orch-01.
+# ==============================================================
+
+---
+machine_role: orchestration

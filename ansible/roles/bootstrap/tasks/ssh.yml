@@ -1,0 +1,38 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Deploys SSH public keys for the admin and ansible users,
+# then disables password authentication.
+#
+# Uses sshd_config.d drop-in to avoid touching the main sshd_config.
+# The SSH service is reloaded via handler after the config is written.
+#
+# This task runs before the network change so the new SSH config
+# is already active when Play 2 connects on the new IP.
+# ==============================================================
+
+---
+
+- name: Deploy homelab_admin SSH key
+  ansible.posix.authorized_key:
+    user:  "{{ bootstrap_admin_user }}"
+    state: present
+    key:   "{{ lookup('file', bootstrap_key_admin) }}"
+
+- name: Deploy ansible SSH key
+  ansible.posix.authorized_key:
+    user:  "{{ bootstrap_ansible_user }}"
+    state: present
+    key:   "{{ lookup('file', bootstrap_key_ansible) }}"
+
+- name: Disable SSH password authentication
+  ansible.builtin.copy:
+    dest:    /etc/ssh/sshd_config.d/10-disable-password-auth.conf
+    content: "PasswordAuthentication no\n"
+    owner:   root
+    group:   root
+    mode:    "0644"
+  notify: Reload sshd

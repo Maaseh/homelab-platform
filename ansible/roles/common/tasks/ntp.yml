@@ -1,0 +1,41 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Installs chrony and configures it to use the local NTP server
+# running on hl-orch-01.
+#
+# ntp_local_server is defined in group_vars/all/main.yml.
+# The chrony config file path differs between RHEL and Debian —
+# first_found handles this without an OS check.
+#
+# The existing pool/server lines are replaced with the local server
+# to ensure all hosts sync from the same source.
+# ==============================================================
+
+---
+
+- name: Install chrony
+  ansible.builtin.package:
+    name:  chrony
+    state: present
+
+- name: Configure chrony with local NTP server
+  ansible.builtin.lineinfile:
+    path:   "{{ lookup('first_found', chrony_conf_paths) }}"
+    regexp: '^(pool|server) '
+    line:   "server {{ ntp_local_server }} iburst prefer"
+  vars:
+    chrony_conf_paths:
+      - /etc/chrony/chrony.conf
+      - /etc/chrony.conf
+  notify: Restart chrony
+
+- name: Enable and start chronyd
+  ansible.builtin.service:
+    name:    chronyd
+    state:   started
+    enabled: true
+

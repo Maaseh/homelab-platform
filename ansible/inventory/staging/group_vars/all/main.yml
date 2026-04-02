@@ -1,0 +1,13 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to all staging hosts.
+# Vault variables are shared with production vault.yml.
+# ==============================================================
+
+---
+
+# Staging VMs do not yet have the ansible SSH key deployed.
+# Password authentication is used for the initial connection.
+ansible_ssh_common_args: "-o StrictHostKeyChecking=no"

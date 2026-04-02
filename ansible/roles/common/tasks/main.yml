@@ -1,55 +1,26 @@
-# Name: main.yml
+# ==============================================================
+# Version: v0.2
+#
 # Author: Thomas "Maaseh" Bonnet
-# Description: Basic configuration for new system
+#
+# Description:
+# Baseline configuration applied to every managed host.
+# OS-specific behavior is driven entirely by variables
+# from group_vars/os_* — no ansible_facts OS checks here.
+#
+# Sub-task files:
+#   timezone.yml  : system timezone
+#   ntp.yml       : chrony install and configuration
+#   packages.yml  : package cache update and base packages
+# ==============================================================
 
-# time configuration
+---
 
-- name: timezone configuration
-  community.general.timezone:
-    name: Europe/Paris
+- name: Configure timezone
+  ansible.builtin.import_tasks: timezone.yml
 
-- name: Install chrony
-  ansible.builtin.package:
-    name: chrony
-    state: present
+- name: Configure NTP
+  ansible.builtin.import_tasks: ntp.yml
 
-- name: Configure Chrony with local NTP
-  ansible.builtin.lineinfile:
-    path: "{{ lookup('first_found', params) }}"
-    regexp: '^(pool|server) '
-    line: "server 172.16.10.30 iburst prefer"
-  vars:
-    params:
-      files:
-        - /etc/chrony/chrony.conf
-        - /etc/chrony.conf
-  notify: restart chrony
-
-- name: start chronyd
-  ansible.builtin.service:
-    name: chronyd
-    state: started
-    enabled: yes
-
-# Packages update and installation
-
-- name: update package cache (Debian)
-  ansible.builtin.apt:
-    update_cache: yes
-    cache_valid_time: 3600
-  when: ansible_os_family == "Debian"
-
-- name: update package cache (RedHat)
-  ansible.builtin.dnf:
-    update_cache: yes
-  when: ansible_os_family == "RedHat"
-
-- name: install packages
-  ansible.builtin.package:
-    name:
-      - vim
-      - htop
-      - curl
-      - wget
-      - net-tools
-    state: present
+- name: Install base packages
+  ansible.builtin.import_tasks: packages.yml

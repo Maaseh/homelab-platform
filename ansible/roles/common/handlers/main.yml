@@ -1,10 +1,17 @@
-# Name: main.yml
-# Author: Thomas "maaseh" Bonnet
-# Description: Handler linked to ../common/main.yml
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Handlers for the common role.
+# Restart chrony is triggered when the chrony config changes.
+# ==============================================================
 
-# restart services
+---
 
-- name: restart chrony
+- name: Restart chrony
   ansible.builtin.service:
-    name: chronyd
+    name:  chronyd
     state: restarted
+

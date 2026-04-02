@@ -1,0 +1,17 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Enables and starts the node_exporter systemd service.
+# daemon_reload is handled by the handler in handlers/main.yml
+# which is triggered by the service unit copy in install.yml.
+# ==============================================================
+
+---
+
+- name: Enable and start node_exporter service
+  ansible.builtin.systemd:
+    name:    nodeExport.service
+    state:   started
+    enabled: true
+

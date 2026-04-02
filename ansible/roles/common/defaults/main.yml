@@ -1,0 +1,22 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Default variables for the common role.
+# OS-specific values (base_packages, pkg_manager) are expected
+# from group_vars/os_* and should not be defined here.
+# ==============================================================
+
+---
+
+# Timezone
+system_timezone: Europe/Paris
+
+# NTP — local server defined in group_vars/all/main.yml
+# ntp_local_server: <set in group_vars/all>
+
+# SSH
+ssh_permit_root_login: "no"
+ssh_password_auth:     "no"

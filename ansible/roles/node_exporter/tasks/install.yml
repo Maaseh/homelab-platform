@@ -1,0 +1,39 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Creates the dedicated system user and copies the binary
+# and service unit file to their destination.
+#
+# Files are sourced from roles/node_exporter/files/.
+# Ansible resolves this path automatically — no absolute path needed.
+# ==============================================================
+
+---
+
+- name: Create node_exporter system user
+  ansible.builtin.user:
+    name:        "{{ node_exporter_user }}"
+    comment:     "{{ node_exporter_comment }}"
+    system:      true
+    shell:       "{{ node_exporter_shell }}"
+    uid:         "{{ node_exporter_uid }}"
+    create_home: false
+
+- name: Copy node_exporter binary
+  ansible.builtin.copy:
+    src:   "{{ node_exporter_bin_src }}"
+    dest:  "{{ node_exporter_bin_dest }}"
+    owner: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+    mode:  "0750"
+
+- name: Copy node_exporter service unit
+  ansible.builtin.copy:
+    src:   "{{ node_exporter_service_src }}"
+    dest:  "{{ node_exporter_service_dest }}"
+    owner: root
+    group: root
+    mode:  "0644"
+  notify: Reload systemd
+

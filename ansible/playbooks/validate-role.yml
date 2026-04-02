@@ -1,0 +1,36 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Validates a role against a target host or group.
+# Defaults to the common role if no role is specified.
+# Always run with --check --diff first to preview changes.
+#
+# Run against a single host:
+#   ansible-playbook playbooks/validate-role.yml \
+#     -i inventory/production \
+#     -l hl-dns-01 --check --diff
+#
+# Run with a specific role:
+#   ansible-playbook playbooks/validate-role.yml \
+#     -i inventory/production \
+#     -l hl-dns-01 \
+#     -e "target_role=node_exporter" --check --diff
+#
+# Apply for real (remove --check):
+#   ansible-playbook playbooks/validate-role.yml \
+#     -i inventory/production \
+#     -l hl-dns-01
+# ==============================================================
+
+---
+
+- name: Validate role against target
+  hosts: "{{ target_hosts | default('managed') }}"
+  become: true
+  gather_facts: true
+
+  roles:
+    - "{{ target_role | default('common') }}"

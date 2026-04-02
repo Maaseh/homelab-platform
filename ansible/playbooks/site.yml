@@ -1,0 +1,17 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Master playbook. Applies baseline configuration to all
+# managed production hosts.
+# Run: ansible-playbook playbooks/site.yml -i inventory/production
+# ==============================================================
+
+---
+
+- name: Apply common role to all managed hosts
+  hosts: managed
+  gather_facts: true
+
+  roles:
+    - common

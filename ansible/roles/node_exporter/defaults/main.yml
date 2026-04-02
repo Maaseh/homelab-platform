@@ -1,0 +1,36 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Default variables for the node_exporter role.
+# Any of these values can be overridden in group_vars or host_vars
+# without touching the role itself.
+# ==============================================================
+
+---
+
+# node_exporter binary
+node_exporter_version:  "1.10.2"
+node_exporter_arch:     "linux-amd64"
+node_exporter_bin_src:  "node_exporter-{{ node_exporter_version }}.{{ node_exporter_arch }}/node_exporter"
+node_exporter_bin_dest: /usr/local/bin/node_exporter
+
+# Service unit file
+node_exporter_service_src:  nodeExport.service
+node_exporter_service_dest: /etc/systemd/system/nodeExport.service
+
+# Dedicated system user
+node_exporter_user:  nodeuser
+node_exporter_group: nodeuser
+node_exporter_uid:   901
+node_exporter_shell: /sbin/nologin
+node_exporter_comment: "Node Exporter"
+
+# Network
+node_exporter_port: 9100
+
+# file_sd — path on hl-mon-01 where target files are written
+file_sd_dest_dir: /opt/docker/prometheus/file_sd
+
+# Prometheus reload endpoint — uses variables from group_vars/infra_monitoring
+prometheus_reload_url: "http://{{ hostvars['hl-mon-01']['ansible_host'] }}:{{ prometheus_port }}/-/reload"

@@ -1,0 +1,27 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Writes a Prometheus file_sd target file on hl-mon-01 for
+# the current host, then triggers a Prometheus configuration reload.
+#
+# delegate_to: the task runs locally on hl-mon-01 even though
+# the play is targeting the remote host. This is what allows
+# a single play to both install node_exporter AND register
+# the target in Prometheus without a second play.
+#
+# inventory_hostname: the name of the host currently being
+# processed by the loop — used to name the file_sd file.
+# ==============================================================
+
+---
+
+- name: Write file_sd target config on hl-mon-01
+  ansible.builtin.template:
+    src:   file_sd.yml.j2
+    dest:  "{{ file_sd_dest_dir }}/{{ inventory_hostname }}.yml"
+    owner: root
+    group: root
+    mode:  "0644"
+  delegate_to: hl-mon-01
+  notify: Reload Prometheus

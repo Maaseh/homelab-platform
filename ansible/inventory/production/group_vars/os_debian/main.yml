@@ -1,0 +1,30 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to all Debian hosts.
+# Defines OS-specific behavior: package manager, firewall backend,
+# and AppArmor state.
+# ==============================================================
+
+---
+
+# Package management
+pkg_manager: apt
+base_packages:
+  - vim
+  - curl
+  - git
+  - bash-completion
+  - python3
+  - tar
+  - unzip
+
+# Firewall
+# Debian does not ship with firewalld.
+# nftables is used directly or via ufw depending on the role.
+firewall_service: nftables
+firewall_backend: nftables
+
+# AppArmor (replaces SELinux on Debian)
+apparmor_enabled: true

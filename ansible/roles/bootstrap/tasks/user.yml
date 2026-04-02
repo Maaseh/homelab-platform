@@ -1,0 +1,30 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Creates the ansible system user and deploys its sudoers file.
+# The sudoers file is validated before being written to avoid
+# locking out sudo access on the host.
+# ==============================================================
+
+---
+
+- name: Create ansible system user
+  ansible.builtin.user:
+    name:        "{{ bootstrap_ansible_user }}"
+    comment:     "{{ bootstrap_ansible_comment }}"
+    system:      true
+    shell:       "{{ bootstrap_ansible_shell }}"
+    uid:         "{{ bootstrap_ansible_uid }}"
+    create_home: true
+
+- name: Deploy sudoers file for ansible user
+  ansible.builtin.copy:
+    dest:     "/etc/sudoers.d/{{ bootstrap_ansible_user }}"
+    content:  "{{ bootstrap_ansible_user }} ALL=(ALL) NOPASSWD:ALL"
+    owner:    root
+    group:    root
+    mode:     "0440"
+    validate: "/usr/sbin/visudo --check --file=%s"

@@ -1,0 +1,18 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to hosts in the infra_monitoring group.
+# Covers Prometheus, Grafana, and related tooling.
+# ==============================================================
+
+---
+
+prometheus_port:      9090
+node_exporter_port:   9100
+grafana_port:         3000
+
+prometheus_retention: "15d"
+prometheus_data_dir:  /var/lib/prometheus
+
+machine_role: monitoring

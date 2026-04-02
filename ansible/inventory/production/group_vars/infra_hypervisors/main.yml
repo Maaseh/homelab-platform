@@ -1,0 +1,15 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to Proxmox hypervisor nodes.
+# Node-specific values (storage, network bridge) are defined
+# in host_vars.
+# ==============================================================
+
+---
+
+proxmox_api_port:   8006
+proxmox_cluster:    homelab-cluster
+machine_type: Hypervisor
+group_type: Server

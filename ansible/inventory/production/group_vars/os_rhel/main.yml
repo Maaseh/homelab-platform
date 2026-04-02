@@ -1,0 +1,29 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to all Rocky Linux, AlmaLinux, and RHEL hosts.
+# Defines OS-specific behavior: package manager, firewall backend,
+# and SELinux state.
+# ==============================================================
+
+---
+
+# Package management
+pkg_manager: dnf
+base_packages:
+  - vim-enhanced
+  - curl
+  - git
+  - bash-completion
+  - python3
+  - tar
+  - unzip
+
+# Firewall
+firewall_service: firewalld
+firewall_backend: nftables
+
+# SELinux
+selinux_state: enforcing
+selinux_policy: targeted

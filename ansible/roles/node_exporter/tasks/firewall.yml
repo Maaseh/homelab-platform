@@ -1,0 +1,21 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Opens port 9100/tcp in firewalld.
+#
+# This task file is only called when firewall_managed is true.
+# For LXC containers and bare-metal Proxmox nodes,
+# firewall_managed is set to false in their respective group_vars,
+# so this file is never executed on those hosts.
+# The when: condition is evaluated in tasks/main.yml before import.
+# ==============================================================
+
+---
+
+- name: Open node_exporter port in firewalld
+  ansible.posix.firewalld:
+    port:      "{{ node_exporter_port }}/tcp"
+    permanent: true
+    immediate: true
+    state:     enabled

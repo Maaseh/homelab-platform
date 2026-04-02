@@ -1,0 +1,20 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Smoke test playbook. Verifies that the common role applies
+# cleanly against a target host or group.
+# Safe to run in check mode.
+#
+# Run: ansible-playbook playbooks/test-common.yml \
+#        -i inventory/production -l <host_or_group> --check --diff
+# ==============================================================
+
+---
+
+- name: Test common role
+  hosts: "{{ target | default('managed') }}"
+  gather_facts: true
+
+  roles:
+    - common

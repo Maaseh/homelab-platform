@@ -1,0 +1,21 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Restores the correct SELinux file context on the node_exporter
+# binary after it has been copied to /usr/local/bin/.
+#
+# This task file is only called when selinux_state is not disabled.
+# The when: condition is evaluated in tasks/main.yml before import.
+# On LXC containers, selinux_state is disabled via group_vars/type_lxc
+# so this file is never executed on those hosts.
+# ==============================================================
+
+---
+
+- name: Restore SELinux context on node_exporter binary
+  ansible.builtin.command:
+    cmd: restorecon -v {{ node_exporter_bin_dest }}
+  register: selinux_result
+  changed_when: "'Relabeled' in selinux_result.stdout"
+

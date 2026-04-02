@@ -1,0 +1,29 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Variables applied to every managed host regardless of OS,
+# type, or functional group.
+# Secrets are referenced here by name and stored in vault.yml.
+# ==============================================================
+
+---
+
+# SSH connection
+ansible_ssh_private_key_file: ~/.ssh/ansible_ed25519
+ansible_ssh_common_args: "-o StrictHostKeyChecking=accept-new"
+
+# Privilege escalation password (value stored in vault.yml)
+ansible_become_password: "{{ vault_become_pass }}"
+
+# Internal infrastructure
+internal_domain: lab.vansys.io
+internal_dns:    172.16.10.2
+
+# NTP
+ntp_local_server: 172.16.10.30
+
+# SSH public keys deployed to every managed host
+authorized_keys:
+  - files/ssh_keys/ansible-key.pub
+  - files/ssh_keys/homelab_admin.pub

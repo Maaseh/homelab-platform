@@ -1,0 +1,36 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Default variables for the bootstrap role.
+# target_ip and target_name have no defaults and must be
+# passed explicitly via -e at runtime.
+# ==============================================================
+
+---
+
+# Required at runtime — no defaults
+# target_ip:   <required>
+# target_name: <required>
+
+# Network
+bootstrap_interface: ens18
+bootstrap_gateway:   172.16.10.1
+bootstrap_prefix:    24
+bootstrap_dns:
+  - 172.16.10.2
+
+# Ansible system user
+bootstrap_ansible_user:    ansible
+bootstrap_ansible_uid:     900
+bootstrap_ansible_shell:   /bin/bash
+bootstrap_ansible_comment: "Ansible automation user"
+
+# Admin user to receive homelab_admin SSH key
+bootstrap_admin_user: maaseh
+
+# SSH keys — paths relative to the playbook root
+bootstrap_key_admin:   files/ssh_keys/homelab_admin.pub
+bootstrap_key_ansible: files/ssh_keys/ansible-key.pub

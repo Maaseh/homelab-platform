@@ -1,0 +1,24 @@
+# ==============================================================
+# Version: v0.1
+#
+# Description:
+# Prometheus file_sd target template.
+# One file is generated per managed host on hl-mon-01.
+# Prometheus watches the file_sd directory and automatically
+# picks up new or modified files without a full reload.
+#
+# Variables injected by Ansible at render time:
+#   inventory_hostname : short hostname of the target host
+#   ansible_host       : IP address of the target host
+#   node_exporter_port : port node_exporter listens on (default 9100)
+# ==============================================================
+
+---
+
+- targets:
+    - "{{ ansible_host }}:{{ node_exporter_port }}"
+  labels:
+    location: France
+    type: "{{ machine_type }}"
+    role: "{{ machine_role }}"
+    
