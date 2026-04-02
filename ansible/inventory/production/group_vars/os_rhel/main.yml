@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Variables applied to all Rocky Linux, AlmaLinux, and RHEL hosts.
 # Defines OS-specific behavior: package manager, firewall backend,
