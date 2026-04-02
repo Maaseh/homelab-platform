@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Restores the correct SELinux file context on the node_exporter
 # binary after it has been copied to /usr/local/bin/.
