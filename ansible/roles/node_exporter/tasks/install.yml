@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Creates the dedicated system user and copies the binary
 # and service unit file to their destination.
