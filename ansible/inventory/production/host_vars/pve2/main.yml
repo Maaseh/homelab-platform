@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Host-specific variables for pve2.
 # Values here override group_vars for this host only.
@@ -8,6 +10,6 @@
 
 ---
 
-proxmox_node_name:    pve2
-proxmox_storage:      local-zfs
-proxmox_bridge:       vmbr0
+# proxmox_node_name:    pve2
+# proxmox_storage:      local-zfs
+# proxmox_bridge:       vmbr0
