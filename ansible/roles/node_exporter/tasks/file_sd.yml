@@ -1,6 +1,8 @@
 # ==============================================================
 # Version: v0.1
 #
+# Author: Thomas "Maaseh" Bonnet
+#
 # Description:
 # Writes a Prometheus file_sd target file on hl-mon-01 for
 # the current host, then triggers a Prometheus configuration reload.
