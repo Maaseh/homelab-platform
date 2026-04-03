@@ -30,6 +30,10 @@ ansible/
 |   |   |   |   `-- main.yml            # Variables for Debian hosts
 |   |   |   |-- type_lxc/
 |   |   |   |   `-- main.yml            # Variables for LXC containers
+|   |   |   |-- type_baremetal/
+|   |   |   |   `-- main.yml            # Variables for baremetal servers
+|   |   |   |-- type_vm/
+|   |   |   |   `-- main.yml            # Variables for VMs
 |   |   |   |-- infra_networking/
 |   |   |   |   `-- main.yml            # Variables for networking hosts
 |   |   |   |-- infra_monitoring/
