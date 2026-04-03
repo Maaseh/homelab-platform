@@ -30,6 +30,7 @@ node_exporter_comment: "Node Exporter"
 
 # Network
 node_exporter_port: 9100
+prometheus_port: 9090
 
 # file_sd — path on hl-mon-01 where target files are written
 file_sd_dest_dir: /opt/docker/prometheus/file_sd

@@ -15,6 +15,9 @@
 - name: Install node_exporter binary and service unit
   ansible.builtin.import_tasks: install.yml
 
+- name: Flush handlers before starting service
+  ansible.builtin.meta: flush_handlers
+
 - name: Configure firewall
   ansible.builtin.import_tasks: firewall.yml
   when: firewall_managed | default(true)

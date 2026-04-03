@@ -1,0 +1,28 @@
+# ==============================================================
+# Version: v0.2
+#
+# Author: Thomas "Maaseh" Bonnet
+#
+# Description:
+# Deploys node_exporter to all managed hosts except
+# infra_hypervisors and infra_monitoring.
+#
+# Run:
+#   ansible-playbook playbooks/node-exporter-install.yml \
+#     -i inventory/production
+#
+# Target a single host:
+#   ansible-playbook playbooks/node-exporter-install.yml \
+#     -i inventory/production -l hl-dns-01
+# ==============================================================
+
+---
+
+- name: Deploy node_exporter to all managed hosts
+  hosts: managed,infra_hypervisors,!infra_monitoring
+  become: true
+  gather_facts: true
+
+  roles:
+    - node_exporter
+
