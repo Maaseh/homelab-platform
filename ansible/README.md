@@ -54,9 +54,9 @@ ansible/
 |
 |-- playbooks/
 |   |-- site.yml                        # Master playbook, runs all roles on all hosts
-|   |-- bootstrap-vm.yml               # Provisions a new VM from template
-|   |-- prometheus-install.yml
-|   `-- test-common.yml
+|   |-- bootstrap-vm.yml                # Provisions a new VM from template
+|   |-- node-exporter-install.yml       # Install and configure Prometheus node exporter   
+|   `-- validate-role.yml               # Configure key components, services after the bootstrap playbook
 |
 |-- roles/
 |   |-- common/                         # Baseline configuration for every managed host
@@ -72,11 +72,9 @@ ansible/
 |           `-- network.yml
 |
 `-- files/
-    |-- ip-addresses-plan.md            # IP address planning document
-    |-- machines-ip.md                  # Current machine IP reference
-    |-- repo/                           # Binary assets and templates
-    |-- services/                       # Systemd service unit files
-    `-- ssh_keys/                       # Public keys deployed to managed hosts
+    |-- docs/                           # Binary assets and templates
+        |-- ip-addresses-plan.md            # IP address planning document
+        |-- machines-ip.md                  # Current machine IP reference
 ```
 
 ---
