@@ -49,8 +49,15 @@ A personal infrastructure platform built for fun and learning.
 
 **Challenge 2.1: No visibility into system health**
 - Solution: Prometheus + Grafana monitoring stack
-- Status: Planned
-- Repo: Inc.
+- Status: Done
+- Details: Using Docker to configure both Prometheus and Grafana. I also worked on a systemd service to launch the node exporter
+- Progression:
+      - Docker installed on hl-mon-01
+      - Firewalld configured
+      - Prometheus and grafana configured (prometheus.yml / datasources.yml)
+      - Systemd service configured to automatically start the node exporter. Node exporter's integration using Systemctl is a simple way to allow Prometheus to scrape  data across the internal network. Using docker for this is not aligned to the KISS principle
+      - Test == OK
+      - Creation of an Ansible role to automate the installation and the configuration to a new and existing machines
 
 **Challenge 2.2: Logs scattered everywhere**
 - Solution: Loki for centralized logging
