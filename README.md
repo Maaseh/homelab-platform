@@ -14,14 +14,19 @@ A personal infrastructure platform built for fun and learning.
 **Challenge 1.1: Manual VM provisioning is tedious**
 - Solution: Ansible playbooks for automated VM setup
 - Status: done
+- Details: hl-orch-01 as my orchestration server.
 - Progression: 
     - Ansible control node deployed (hl-orch-01). 
     - Inventory done. 
-    - SSH key-based authentication established. 
+    - SSH key-based authentication established.
 
 **Challenge 1.2: No consistent base configuration**
-- Solution: Ansible roles (common, docker-host, monitoring-agent)
+- Solution: Ansible roles (common)
 - Status: Done
+- Details: hl-orch-01 as my orchestration server. Modifying the current configuration to create a dedicated role for my bootstrap playbook.
+- Progression
+    - Creation of common role to create a common configuration to all systems
+    - Creation of playbooks (bootstrap) The bootstrap playbook configure the vm from a template to adapt the IP, hostname, NTP, install packages)
 
 **Challenge 1.3: Time drift across VMs**
 - Solution: Centralized NTP server (chrony)
